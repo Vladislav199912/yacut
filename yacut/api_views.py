@@ -28,7 +28,7 @@ def create_id():
     if 'custom_id' in data:
         custom_id = data.get('custom_id')
         if get_from_db(custom_id).first():
-            raise InvalidAPIUsage(f'Имя "{custom_id}" уже занято.')
+            raise InvalidAPIUsage('Предложенный вариант короткой ссылки уже существует.')
         if custom_id == '' or custom_id is None:
             data['custom_id'] = get_unique_short_id()
         elif not re.match(REGEXP, custom_id):
