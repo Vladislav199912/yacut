@@ -29,7 +29,7 @@ def add_url_view():
         if not short_id:
             short_id = get_unique_short_id()
         if get_from_db(short_id).first():
-            flash(f'Имя {short_id} уже занято!')
+            flash('Предложенный вариант короткой ссылки уже существует.')
             return render_template('index.html', form=form)
         url = URLMap(original=form.original_link.data, short=short_id)
         db.session.add(url)
