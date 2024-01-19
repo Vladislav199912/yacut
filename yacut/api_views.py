@@ -11,7 +11,7 @@ from .views import get_from_db, get_unique_short_id
 
 
 @app.route('/api/id/<short_id>/', methods=['GET'])
-def get_url(short_id):
+def get_url(short_id: str) -> str:
     url = get_from_db(short_id).first()
     if url is None:
         raise InvalidAPIUsage('Указанный id не найден', HTTPStatus.NOT_FOUND)

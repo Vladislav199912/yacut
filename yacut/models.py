@@ -1,5 +1,4 @@
 from datetime import datetime
-from urllib.parse import urljoin
 
 from flask import request
 
@@ -14,12 +13,9 @@ class URLMap(db.Model):
     timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
 
     def to_dict(self):
-        return dict(
-            url=self.original,
-            short_link=urljoin(request.url_root, self.short),
-        )
+        return f'{self.url}={self.original}, {self.short_link}={self.urljoin(request.url_root, self.short)}'
 
-    def from_dict(self, data):
+    def from_dict(self, data: str) -> str:
         for field_db, field_request in FIELD_NAMES.items():
             if field_request in data:
                 setattr(self, field_db, data[field_request])
