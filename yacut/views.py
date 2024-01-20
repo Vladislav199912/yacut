@@ -14,7 +14,7 @@ def get_from_db(short_id: str):
     return URLMap.query.filter_by(short=short_id)
 
 
-def get_unique_short_id():
+def get_unique_short_id(LEN_CUSROM_ID):
     return ''.join(random_choices(ALPHABET, k=LEN_CUSTOM_ID))
 
 
