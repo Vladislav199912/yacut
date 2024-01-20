@@ -13,10 +13,10 @@ class URLMap(db.Model):
     timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
 
     def to_dict(self):
-        return dict(
-            url=self.original,
-            short_link=urljoin(request.url_root, self.short),
-        )
+        return {
+            'url': self.original,
+            'short_link': urljoin(request.url_root, self.short)
+        }
 
     def from_dict(self, data: str) -> str:
         for field_db, field_request in FIELD_NAMES.items():

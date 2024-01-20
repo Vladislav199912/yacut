@@ -1,5 +1,5 @@
 from http import HTTPStatus
-
+from typing import Optional
 from flask import jsonify, render_template
 
 from . import app, db
@@ -8,7 +8,7 @@ from . import app, db
 class InvalidAPIUsage(Exception):
     status_code = HTTPStatus.BAD_REQUEST
 
-    def __init__(self, message: str, status_code=None):
+    def __init__(self, message: str, status_code: Optional[int] = None):
         super().__init__()
         self.message = message
         if status_code is not None:

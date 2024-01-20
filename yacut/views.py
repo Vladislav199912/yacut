@@ -1,10 +1,13 @@
 from flask import flash, redirect, render_template, url_for
-from random import choices
-from string import ascii_letters, digits
+
 from . import app, db
 from .constants import LEN_CUSTOM_ID
 from .forms import URLMapForm
 from .models import URLMap
+from random import choices as random_choices
+from string import ascii_letters, digits
+
+ALPHABET = ascii_letters + digits
 
 
 def get_from_db(short_id: str):
@@ -12,10 +15,7 @@ def get_from_db(short_id: str):
 
 
 def get_unique_short_id():
-    while True:
-        short_id = ''.join(choices(ascii_letters + digits, k=LEN_CUSTOM_ID))
-        if not URLMap.query.filter_by(short=short_id).first():
-            return short_id
+    return ''.join(random_choices(ALPHABET, k=LEN_CUSTOM_ID))
 
 
 @app.route('/', methods=['GET', 'POST'])
