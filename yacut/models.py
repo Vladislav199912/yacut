@@ -1,5 +1,5 @@
 from datetime import datetime
-
+from urllib.parse import urljoin
 from flask import request
 
 from . import db
@@ -13,7 +13,10 @@ class URLMap(db.Model):
     timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
 
     def to_dict(self):
-        return f'{self.url}={self.original}, {self.short_link}={self.urljoin(request.url_root, self.short)}'
+        return dict(
+            url=self.original,
+            short_link=urljoin(request.url_root, self.short),
+        )
 
     def from_dict(self, data: str) -> str:
         for field_db, field_request in FIELD_NAMES.items():
